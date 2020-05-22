@@ -16,7 +16,7 @@ This project is build on Unity 2019.3.9f1. It contains 3 scenes (under `Scenes/`
 *  [MixedReality](#mixedreality)
 *  [VolumeRender](#volumerender)
 
-Due to large size of the files, I put the assets in [release](https://github.com/kwea123/nerf_Unity/releases), you need to download from there and import to Unity. Follow the instructions below for each scene:
+Due to large size of the files, I put the assets in [release](https://github.com/kwea123/nerf_Unity/releases), you need to download from there and import to Unity. **Make sure you download them and put under `Assets/` before opening Unity.** Follow the instructions below for each scene:
 
 ## MeshRender
 
