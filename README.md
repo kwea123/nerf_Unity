@@ -51,3 +51,6 @@ Volume render rays of a virtual object.
     *  Select gameobject
     *  Drag vol into the missing part
 ![image](https://user-images.githubusercontent.com/11364490/82661695-72371b00-9c67-11ea-96cd-4f1972fdf48b.png)
+
+# TODO
+- [ ] Render the volume from inside
