@@ -1,4 +1,4 @@
-﻿Shader "Unlit/volumeShad2"  // ref https://github.com/mattatz/unity-volume-rendering/blob/master/Assets/VolumeRendering/Shaders/VolumeRendering.cginc
+Shader "Unlit/volumeShad2"  // ref https://github.com/mattatz/unity-volume-rendering/blob/master/Assets/VolumeRendering/Shaders/VolumeRendering.cginc
 {
 	Properties
 	{
@@ -21,11 +21,11 @@
 		{ "Queue" = "Transparent"
 		  "RenderType" = "Transparent"
 		}
-		Cull Back
+		Cull Front
 		ZWrite Off
 		ZTest LEqual
 		Blend SrcAlpha OneMinusSrcAlpha
-		//Lighting Off
+		Lighting Off
 
 		Pass
 		{
@@ -46,34 +46,10 @@
 				float4 localPos : TEXCOORD0;
 			};
 
-			struct Ray {
-				float3 origin;
-				float3 dir;
-			};
-
-			struct AABB { // axis aligned bounding box
-				float3 min;
-				float3 max;
-			};
-
 			sampler3D _Volume;
 			int _Iteration;
 			fixed _MinX, _MaxX, _MinY, _MaxY, _MinZ, _MaxZ;
 			fixed _Dissolve;
-
-			bool intersect(Ray r, AABB aabb, out float t0, out float t1)
-			{
-				float3 invR = 1.0 / r.dir;
-				float3 tbot = invR * (aabb.min - r.origin);
-				float3 ttop = invR * (aabb.max - r.origin);
-				float3 tmin = min(ttop, tbot);
-				float3 tmax = max(ttop, tbot);
-				float2 t = max(tmin.xx, tmin.yz);
-				t0 = max(t.x, t.y);
-				t = min(tmax.xx, tmax.yz);
-				t1 = min(t.x, t.y);
-				return t0 <= t1;
-			}
 
 			float4 sample(float3 pos) // clip the volume
 			{
@@ -93,38 +69,33 @@
 
 			fixed4 frag(v2f i) : SV_Target
 			{
-				Ray ray;
-				ray.origin = i.localPos;
-				ray.dir = -normalize(ObjSpaceViewDir(i.localPos)); // camera to object
+				float3 rayOrigin = i.localPos + 0.5;
+				float3 rayDir = ObjSpaceViewDir(i.localPos);
+				float rayLength = length(rayDir);
+				rayDir = normalize(rayDir);
 
-				AABB aabb;
-				aabb.min = float3(-0.5, -0.5, -0.5);
-				aabb.max = float3(0.5, 0.5, 0.5);
-
-				float near, far;
-				intersect(ray, aabb, near, far); // find intersection near and far
-				near = max(0.0, near);
-
-				float3 curPos = ray.origin; // start from origin, then move forward
-				float3 step = ray.dir * (far - near) / _Iteration;
 				float4 finalColor = 0.0;
+				float t = 1.732 / _Iteration; // step size for one iteration
 
 				[loop]
 				for (int j = 0; j < _Iteration; ++j)
 				{
-					float4 color = sample(curPos + 0.5);
-					// use front to back blending
-					finalColor.rgb += (1 - finalColor.a) * color.a * color.rgb;
-					finalColor.a += (1 - finalColor.a) * color.a;
+					float step = t * j;
+					if (step > rayLength) // do not render volume that is behind the camera
+						break;
+					float3 curPos = rayOrigin;
 					if (_Dissolve) {
-						curPos += step * (1 + sin(_Time.z / 2))*0.5;
+						step *= (1 + sin(_Time.z / 2))*0.5;
 					}
-					else {
-						curPos += step; // move the ray forward
-					}
-					if (finalColor.a > 0.999) break;
+					curPos += rayDir * step;
+					float4 color = sample(curPos);
+					// use back to front composition
+					finalColor.rgb = color.a * color.rgb + (1-color.a) * finalColor.rgb;
+					finalColor.a = color.a + (1 - color.a) * finalColor.a;
+					if (finalColor.a > 1) break;
 				}
 				return finalColor;
+
 			}
 			ENDCG
 		}
