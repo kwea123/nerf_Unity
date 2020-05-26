@@ -20,6 +20,8 @@ This project is built on Unity 2019.3.9f1 on **Windows**. It contains 3 scenes (
 
 Due to large size of the files, I put the assets in [release](https://github.com/kwea123/nerf_Unity/releases), you need to download from there and import to Unity. **Make sure you download them and put under `Assets/` before opening Unity.** Follow the instructions below for each scene:
 
+If you want to use your own data, please see [this](https://github.com/kwea123/nerf_pl/blob/master/README_Unity.md) and [videos](https://www.youtube.com/playlist?list=PLDV2CyUo4q-K02pNEyDr7DYpTQuka3mbV) to train on your own data first.
+
 ## MeshRender
 
 Render reconstructed meshes.
