@@ -11,7 +11,7 @@ Unity projects for my implementation of [nerf_pl (Neural Radiance Fields)](https
 
 # Installation and usage
 
-This project is build on Unity 2019.3.9f1. It contains 3 scenes (under `Scenes/` folder):
+This project is built on Unity 2019.3.9f1 on **Windows**. It contains 3 scenes (under `Scenes/` folder):
 *  [MeshRender](#meshrender)
 *  [MixedReality](#mixedreality)
 *  [VolumeRender](#volumerender)
