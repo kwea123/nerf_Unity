@@ -4,6 +4,8 @@
 
 Unity projects for my implementation of [nerf_pl (Neural Radiance Fields)](https://github.com/kwea123/nerf_pl)
 
+Update : Now you can view the volume from **inside**! See [video](https://youtu.be/JJfG2G5ebv4)
+
 ### Tutorial and demo videos
 <a href="https://www.youtube.com/playlist?list=PLDV2CyUo4q-K02pNEyDr7DYpTQuka3mbV">
 <img src="https://user-images.githubusercontent.com/11364490/80913471-d5781080-8d7f-11ea-9f72-9d68402b8271.png">
@@ -51,6 +53,3 @@ Volume render rays of a virtual object.
     *  Select gameobject
     *  Drag vol into the missing part
 ![image](https://user-images.githubusercontent.com/11364490/82661695-72371b00-9c67-11ea-96cd-4f1972fdf48b.png)
-
-# TODO
-- [ ] Render the volume from inside
