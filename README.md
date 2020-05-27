@@ -44,7 +44,7 @@ Render a real scene with correct depth values, where you can add virtual objects
 If you're using linux, it seems `StreamingAssets` cannot be correctly imported [#2](/../../issues/2). In this case, try to manually enter the path to files into the missing parts. 
 
 ## VolumeRender
-Volume render rays of a virtual object.
+Volume render a virtual object.
 
 ![image](https://user-images.githubusercontent.com/11364490/82661894-d954cf80-9c67-11ea-916f-d441b522ecc1.png)
 
