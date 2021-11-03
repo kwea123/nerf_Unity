@@ -16,9 +16,6 @@
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #pragma target 3.0
-            #pragma multi_compile ___ UNITY_HDR_ON
-
             #include "UnityCG.cginc"
 
             struct appdata
@@ -32,12 +29,6 @@
                 float4 pos : SV_POSITION;
                 float2 uv : TEXCOORD0;
             };
-
-            // struct outdata
-            // {
-            //     float4 color : SV_Target0;
-            //     float depth : SV_Depth;
-            // };
 
             struct GBufferOut
             {
@@ -108,7 +99,6 @@
                 o.emission = float4(0.0, 0.0, 0.0, 0.0);
                 o.normal = float4(GetNormal(i.uv), 1.0);
                 o.depth = GetDepthForBuffer(i.uv);
-
                 return o;
             }
             ENDCG
